@@ -1,7 +1,24 @@
-import React from "react";
+import SectionTitle from "@/components/global/SectionTitle";
+import { fetchUserFavorites } from "@/lib/actions";
+import ProductsGrid from "../products/ProductsGrid";
 
-const Favorites = () => {
-  return <div>Favorites</div>;
+export const metadata = {
+  title: "Comfy Favorites",
+  description: "A nifty store built with Next.js",
 };
 
-export default Favorites;
+const FavoritesPage = async () => {
+  const favorites = await fetchUserFavorites();
+  if (favorites.length === 0) {
+    return <SectionTitle title="You have no favorites yet." />;
+  }
+
+  return (
+    <div>
+      <SectionTitle title="Favorites" />
+      <ProductsGrid products={favorites.map((favorite) => favorite.product)} />
+    </div>
+  );
+};
+
+export default FavoritesPage;

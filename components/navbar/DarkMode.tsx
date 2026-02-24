@@ -8,9 +8,13 @@ import {
 } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const DarkMode = () => {
   const { setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

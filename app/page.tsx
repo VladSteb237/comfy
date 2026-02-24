@@ -1,13 +1,27 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import FeaturedProducts from "@/components/form/FeaturedProducts";
+import Hero from "@/components/form/Hero";
+import React, { Suspense } from "react";
+import LoadingContainer from "@/components/global/LoadingContainer";
+import AppleBanner from "@/components/AppleBanner";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: Promise<{ error?: string }>;
+}) {
+  const error = (await searchParams)?.error;
   return (
-    <div>
-      <h1 className="text-3xl">HomePage</h1>
-      <Button variant="default" size="lg" className="capitalize m-8">
-        Click me
-      </Button>
-    </div>
+    <React.Fragment>
+      {error === "forbidden" && (
+        <AppleBanner message="Only admins can access this page!" />
+      )}
+      <Hero />
+      <Suspense fallback={<LoadingContainer />}>
+        <FeaturedProducts />
+      </Suspense>
+    </React.Fragment>
   );
 }
