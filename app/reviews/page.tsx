@@ -1,7 +1,7 @@
 import { DeleteReview } from "@/components/form/Buttons";
 import SectionTitle from "@/components/global/SectionTitle";
 import ReviewCard from "@/components/reviews/ReviewCard";
-import { fetchProductReviewsByUser } from "@/lib/actions";
+import { fetchProductReviewsByUser, ReviewType } from "@/lib/actions";
 import React from "react";
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
 };
 
 const ReviewsPage = async () => {
-  const reviews = await fetchProductReviewsByUser();
+  const reviews: ReviewType[] = await fetchProductReviewsByUser();
 
   if (reviews.length === 0) {
     return <SectionTitle title="you have no reviews yet" />;

@@ -55,6 +55,16 @@ export type UserFavoriteType = {
   productId: string;
 };
 
+export type ReviewType = {
+  product: {
+    name: string;
+    image: string;
+  };
+  id: string;
+  rating: number;
+  comment: string;
+};
+
 export type OrdersType = {
   id: string;
   products: number;
@@ -362,7 +372,7 @@ export const fetchProductReviews = async (productId: string) => {
   return reviews;
 };
 
-export const fetchProductReviewsByUser = async () => {
+export const fetchProductReviewsByUser = async (): Promise<ReviewType[]> => {
   const user = await getAuthUser();
   const reviews = await db.review.findMany({
     where: {
