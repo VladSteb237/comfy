@@ -12,6 +12,15 @@ import { revalidatePath } from "next/cache";
 import { Cart } from "@prisma/client";
 import db from "@/lib/db";
 
+// Если у тебя Product в Prisma модели
+export type ProductType = {
+  id: string;
+  name: string;
+  company: string;
+  price: number;
+  description?: string;
+};
+
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
   const { userId } = await auth();
@@ -125,7 +134,7 @@ export const createProductAction = async (
   }
 };
 
-export const fetchAdminProducts = async () => {
+export const fetchAdminProducts = async (): Promise<ProductType[]> => {
   await getAdminUser();
   const products = await db.product.findMany({
     orderBy: {

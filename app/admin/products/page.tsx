@@ -10,12 +10,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchAdminProducts } from "@/lib/actions";
+import { fetchAdminProducts, ProductType } from "@/lib/actions";
 import { formatCurrency } from "@/lib/format";
 import Link from "next/link";
 
 const ProductsPage = async () => {
-  const items = await fetchAdminProducts();
+  const items: ProductType[] = await fetchAdminProducts();
 
   if (items.length === 0) {
     return <EmptyList />;
