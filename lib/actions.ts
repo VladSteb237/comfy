@@ -10,7 +10,7 @@ import {
 } from "./schemas";
 import cloudinary, { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
-import { Cart } from "./generated/prisma/client";
+import { Cart, Product } from "@prisma/client";
 
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
@@ -125,7 +125,7 @@ export const createProductAction = async (
   }
 };
 
-export const fetchAdminProducts = async () => {
+export const fetchAdminProducts = async (): Promise<Product[]> => {
   await getAdminUser();
   const products = await db.product.findMany({
     orderBy: {

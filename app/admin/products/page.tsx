@@ -12,10 +12,11 @@ import {
 } from "@/components/ui/table";
 import { fetchAdminProducts } from "@/lib/actions";
 import { formatCurrency } from "@/lib/format";
+import { Product } from "@prisma/client";
 import Link from "next/link";
 
 const ProductsPage = async () => {
-  const items = await fetchAdminProducts();
+  const items: Product[] = await fetchAdminProducts();
 
   if (items.length === 0) {
     return <EmptyList />;
