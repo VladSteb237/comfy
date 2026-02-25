@@ -1,5 +1,5 @@
 import SectionTitle from "@/components/global/SectionTitle";
-import { fetchUserFavorites } from "@/lib/actions";
+import { fetchUserFavorites, UserFavoriteType } from "@/lib/actions";
 import ProductsGrid from "../products/ProductsGrid";
 
 export const metadata = {
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 const FavoritesPage = async () => {
-  const favorites = await fetchUserFavorites();
+  const favorites: UserFavoriteType[] = await fetchUserFavorites();
   if (favorites.length === 0) {
     return <SectionTitle title="You have no favorites yet." />;
   }

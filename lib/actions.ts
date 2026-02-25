@@ -33,6 +33,28 @@ export type OrderType = {
   isPaid: boolean;
 };
 
+export type UserFavoriteType = {
+  product: {
+    name: string;
+    id: string;
+    company: string;
+    description: string;
+    featured: boolean;
+    image: string;
+    imageId: string | null;
+    price: number;
+    createdAt: Date;
+    updatedAt: Date;
+    clerkId: string;
+  };
+} & {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  clerkId: string;
+  productId: string;
+};
+
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
   const { userId } = await auth();
@@ -281,7 +303,7 @@ export const toggleFavoriteAction = async (prevState: {
   }
 };
 
-export const fetchUserFavorites = async () => {
+export const fetchUserFavorites = async (): Promise<UserFavoriteType[]> => {
   const user = await getAuthUser();
   const favorites = await db.favorite.findMany({
     where: {
