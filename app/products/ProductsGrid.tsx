@@ -3,7 +3,7 @@ import { formatCurrency } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import FavoriteToggleButton from "./FavoriteToggleButton";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
 
 type Product = Awaited<ReturnType<typeof db.product.findMany>>[number];
 

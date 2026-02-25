@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import FavoriteToggleButton from "./FavoriteToggleButton";
 import ReadMore from "./ReadMore";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
 
 type Product = Awaited<ReturnType<typeof db.product.findMany>>[number];
 

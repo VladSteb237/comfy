@@ -9,7 +9,7 @@ import {
 } from "./schemas";
 import cloudinary, { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
 
 type Cart = Awaited<ReturnType<typeof db.cart.findUnique>>;
 
