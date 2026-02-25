@@ -5,7 +5,7 @@ import { Card, CardTitle } from "../ui/card";
 import FormContainer from "../form/FormContainer";
 import { createOrderAction } from "@/lib/actions";
 import SubmitButton from "../form/Buttons";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
 
 // Тип Cart с вложенными cartItems и product
 type CartWithItems = Awaited<
