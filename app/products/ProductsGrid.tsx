@@ -1,11 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/format";
-import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import FavoriteToggleButton from "./FavoriteToggleButton";
+import { fetchAllProducts } from "@/lib/actions";
 
-const ProductsGrid = ({ products }: { products: Product[] }) => {
+interface ProductsGridProps {
+  products: Awaited<ReturnType<typeof fetchAllProducts>>;
+}
+
+const ProductsGrid = ({ products }: ProductsGridProps) => {
   return (
     <div className="pt-12 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {products.map((product) => (

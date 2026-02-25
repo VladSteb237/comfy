@@ -1,13 +1,17 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/format";
-import { Product } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import FavoriteToggleButton from "./FavoriteToggleButton";
 import ReadMore from "./ReadMore";
+import { fetchAllProducts } from "@/lib/actions";
 
-const ProductsList = ({ products }: { products: Product[] }) => {
+interface ProductsListProps {
+  products: Awaited<ReturnType<typeof fetchAllProducts>>;
+}
+
+const ProductsList = ({ products }: ProductsListProps) => {
   return (
     <React.Fragment>
       <div className="mt-12 grid gap-y-8">
