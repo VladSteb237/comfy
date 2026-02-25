@@ -9,8 +9,9 @@ import {
 } from "./schemas";
 import cloudinary, { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
-import { Cart } from "@prisma/client";
 import db from "@/lib/db";
+
+type Cart = Awaited<ReturnType<typeof db.cart.findUnique>>;
 
 // Если у тебя Product в Prisma модели
 export type ProductType = {
@@ -553,7 +554,10 @@ const updateOrCreateCartItem = async ({
   }
 };
 
-export const updateCart = async (cart: Cart) => {
+export const updateCart = async (cart: Cart | null) => {
+  if (!cart) {
+    throw new Error("Cart is null");
+  }
   const cartItems = await db.cartItem.findMany({
     where: {
       cartId: cart.id,
