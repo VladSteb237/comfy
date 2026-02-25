@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchUserOrders } from "@/lib/actions";
+import { fetchUserOrders, OrderType } from "@/lib/actions";
 import { formatCurrency, formatDate } from "@/lib/format";
 import React from "react";
 
@@ -18,7 +18,7 @@ export const metadata = {
 };
 
 const OrdersPage = async () => {
-  const orders = await fetchUserOrders();
+  const orders: OrderType[] = await fetchUserOrders();
   return (
     <React.Fragment>
       <SectionTitle title="Your Orders" />

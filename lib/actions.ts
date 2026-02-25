@@ -55,6 +55,19 @@ export type UserFavoriteType = {
   productId: string;
 };
 
+export type OrdersType = {
+  id: string;
+  products: number;
+  orderTotal: number;
+  tax: number;
+  shipping: number;
+  createdAt: Date;
+  email: string;
+  updatedAt: Date;
+  clerkId: string;
+  isPaid: boolean;
+};
+
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
   const { userId } = await auth();
@@ -663,7 +676,7 @@ export const createOrderAction = async (prevState: any, formData: FormData) => {
   redirect(`/checkout?orderId=${orderId}&cartId=${cartId}`);
 };
 
-export const fetchUserOrders = async () => {
+export const fetchUserOrders = async (): Promise<OrderType[]> => {
   const user = await getAuthUser();
   const orders = await db.order.findMany({
     where: {
