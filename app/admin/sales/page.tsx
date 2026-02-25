@@ -68,12 +68,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { fetchAdminOrders } from "@/lib/actions";
+import { fetchAdminOrders, OrderType } from "@/lib/actions";
 import { formatCurrency, formatDate } from "@/lib/format";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
-  const orders = await fetchAdminOrders();
+  const orders: OrderType[] = await fetchAdminOrders();
 
   // Server-side redirect если не админ
   if (!userId || userId !== process.env.ADMIN_USER_ID) {

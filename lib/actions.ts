@@ -20,6 +20,18 @@ export type ProductType = {
   price: number;
   description?: string;
 };
+export type OrderType = {
+  id: string;
+  products: number;
+  orderTotal: number;
+  tax: number;
+  shipping: number;
+  createdAt: Date;
+  email: string;
+  updatedAt: Date;
+  clerkId: string;
+  isPaid: boolean;
+};
 
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
@@ -643,7 +655,7 @@ export const fetchUserOrders = async () => {
   return orders;
 };
 
-export const fetchAdminOrders = async () => {
+export const fetchAdminOrders = async (): Promise<OrderType[]> => {
   await getAdminUser();
   const orders = await db.order.findMany({
     where: {
