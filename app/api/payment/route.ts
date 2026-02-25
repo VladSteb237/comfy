@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import db from "@/lib/db";
+import { db } from "@/lib/db";
 import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
@@ -14,8 +14,8 @@ export const POST = async (req: NextRequest) => {
       id: orderId,
     },
   });
- 
-  const cart= (await db.cart.findUnique({
+
+  const cart = await db.cart.findUnique({
     where: {
       id: cartId,
     },
@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
         },
       },
     }, // Cast to CartWithProducts to satisfy the type
-  }));
+  });
   if (!order || !cart) {
     return Response.json(null, {
       status: 404,
