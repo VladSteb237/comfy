@@ -5,10 +5,10 @@ import Link from "next/link";
 import FavoriteToggleButton from "./FavoriteToggleButton";
 import db from "@/lib/db";
 
-type Products = Awaited<ReturnType<typeof db.product.findMany>>;
+type Product = Awaited<ReturnType<typeof db.product.findMany>>[number];
 
 interface ProductsGridProps {
-  products: Products;
+  products: Product[];
 }
 
 const ProductsGrid = ({ products }: ProductsGridProps) => {

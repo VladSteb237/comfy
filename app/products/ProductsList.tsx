@@ -7,10 +7,10 @@ import FavoriteToggleButton from "./FavoriteToggleButton";
 import ReadMore from "./ReadMore";
 import db from "@/lib/db";
 
-type Products = Awaited<ReturnType<typeof db.product.findMany>>;
+type Product = Awaited<ReturnType<typeof db.product.findMany>>[number];
 
 interface ProductsListProps {
-  products: Products;
+  products: Product[];
 }
 
 const ProductsList = ({ products }: ProductsListProps) => {
