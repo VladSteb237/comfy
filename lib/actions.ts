@@ -78,6 +78,17 @@ export type OrdersType = {
   isPaid: boolean;
 };
 
+export type ProductReviewType = {
+  id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  clerkId: string;
+  productId: string;
+  rating: number;
+  comment: string;
+  authorName: string;
+  authorImageUrl: string;
+};
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
   const { userId } = await auth();
@@ -360,7 +371,9 @@ export const createReviewAction = async (
   }
 };
 
-export const fetchProductReviews = async (productId: string) => {
+export const fetchProductReviews = async (
+  productId: string,
+): Promise<ProductReviewType[]> => {
   const reviews = await db.review.findMany({
     where: {
       productId,

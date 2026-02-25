@@ -1,10 +1,9 @@
-import { fetchProductReviews } from "@/lib/actions";
-import React from "react";
+import { fetchProductReviews, ProductReviewType } from "@/lib/actions";
 import SectionTitle from "../global/SectionTitle";
 import ReviewCard from "./ReviewCard";
 
 const ProductReviews = async ({ productId }: { productId: string }) => {
-  const reviews = await fetchProductReviews(productId);
+  const reviews: ProductReviewType[] = await fetchProductReviews(productId);
 
   return (
     <div className="mt-16">
