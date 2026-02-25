@@ -1,13 +1,21 @@
 import { formatCurrency } from "@/lib/format";
 import React from "react";
-import { Cart } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { Separator } from "../ui/separator";
 import { Card, CardTitle } from "../ui/card";
 import FormContainer from "../form/FormContainer";
 import { createOrderAction } from "@/lib/actions";
 import SubmitButton from "../form/Buttons";
 
-const CartTotals = ({ cart }: { cart: Cart }) => {
+type CartWithProducts = Prisma.CartGetPayload<{
+  include: { cartItems: { include: { product: true } } };
+}>;
+
+interface CartTotalsProps {
+  cart: CartWithProducts;
+}
+
+const CartTotals = ({ cart }: CartTotalsProps) => {
   const { cartTotal, shipping, orderTotal, tax } = cart;
   return (
     <div>
