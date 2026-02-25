@@ -3,10 +3,12 @@ import { formatCurrency } from "@/lib/format";
 import Image from "next/image";
 import Link from "next/link";
 import FavoriteToggleButton from "./FavoriteToggleButton";
-import { fetchAllProducts } from "@/lib/actions";
+import db from "@/lib/db";
+
+type Products = Awaited<ReturnType<typeof db.product.findMany>>;
 
 interface ProductsGridProps {
-  products: Awaited<ReturnType<typeof fetchAllProducts>>;
+  products: Products;
 }
 
 const ProductsGrid = ({ products }: ProductsGridProps) => {

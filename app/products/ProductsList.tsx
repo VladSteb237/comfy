@@ -5,10 +5,12 @@ import Link from "next/link";
 import React from "react";
 import FavoriteToggleButton from "./FavoriteToggleButton";
 import ReadMore from "./ReadMore";
-import { fetchAllProducts } from "@/lib/actions";
+import db from "@/lib/db";
+
+type Products = Awaited<ReturnType<typeof db.product.findMany>>;
 
 interface ProductsListProps {
-  products: Awaited<ReturnType<typeof fetchAllProducts>>;
+  products: Products;
 }
 
 const ProductsList = ({ products }: ProductsListProps) => {
