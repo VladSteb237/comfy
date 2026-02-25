@@ -1,17 +1,6 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 import Stripe from "stripe";
-import { Prisma } from "@prisma/client";
-
-type CartWithProducts = Prisma.CartGetPayload<{
-  include: {
-    cartItems: {
-      include: {
-        product: true;
-      };
-    };
-  };
-}>;
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -25,7 +14,15 @@ export const POST = async (req: NextRequest) => {
       id: orderId,
     },
   });
-  const cart: CartWithProducts | null = await db.cart.findUnique({
+  // Define the type for the cart with products directly
+  type CartWithProducts = Awaited<ReturnType<typeof db.cart.findUnique>> & {
+    cartItems: {
+      amount: number;
+      product: { name: string; image: string; price: number };
+    }[];
+  };
+
+  const cart: CartWithProducts | null = (await db.cart.findUnique({
     where: {
       id: cartId,
     },
@@ -35,8 +32,8 @@ export const POST = async (req: NextRequest) => {
           product: true,
         },
       },
-    },
-  });
+    }, // Cast to CartWithProducts to satisfy the type
+  })) as CartWithProducts | null;
   if (!order || !cart) {
     return Response.json(null, {
       status: 404,
