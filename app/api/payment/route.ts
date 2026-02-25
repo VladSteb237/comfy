@@ -14,15 +14,8 @@ export const POST = async (req: NextRequest) => {
       id: orderId,
     },
   });
-  // Define the type for the cart with products directly
-  type CartWithProducts = Awaited<ReturnType<typeof db.cart.findUnique>> & {
-    cartItems: {
-      amount: number;
-      product: { name: string; image: string; price: number };
-    }[];
-  };
-
-  const cart: CartWithProducts | null = (await db.cart.findUnique({
+ 
+  const cart= (await db.cart.findUnique({
     where: {
       id: cartId,
     },
@@ -33,14 +26,16 @@ export const POST = async (req: NextRequest) => {
         },
       },
     }, // Cast to CartWithProducts to satisfy the type
-  })) as CartWithProducts | null;
+  }));
   if (!order || !cart) {
     return Response.json(null, {
       status: 404,
       statusText: "Order not found",
     });
   }
-  const line_items = cart.cartItems.map((item) => {
+  type CartItemWithProduct = (typeof cart.cartItems)[number];
+
+  const line_items = cart.cartItems.map((item: CartItemWithProduct) => {
     return {
       price_data: {
         currency: "usd",
