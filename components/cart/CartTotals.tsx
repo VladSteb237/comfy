@@ -1,6 +1,6 @@
 import { formatCurrency } from "@/lib/format";
-import { Cart } from "@/lib/generated/prisma/client";
 import React from "react";
+import { Cart } from "@prisma/client";
 import { Separator } from "../ui/separator";
 import { Card, CardTitle } from "../ui/card";
 import FormContainer from "../form/FormContainer";
