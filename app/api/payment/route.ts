@@ -1,6 +1,17 @@
 import { NextRequest } from "next/server";
 import db from "@/lib/db";
 import Stripe from "stripe";
+import { Prisma } from "@prisma/client";
+
+type CartWithProducts = Prisma.CartGetPayload<{
+  include: {
+    cartItems: {
+      include: {
+        product: true;
+      };
+    };
+  };
+}>;
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string);
 
@@ -14,7 +25,7 @@ export const POST = async (req: NextRequest) => {
       id: orderId,
     },
   });
-  const cart = await db.cart.findUnique({
+  const cart: CartWithProducts | null = await db.cart.findUnique({
     where: {
       id: cartId,
     },
