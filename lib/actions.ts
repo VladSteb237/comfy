@@ -1,6 +1,5 @@
 "use server";
 import { redirect } from "next/navigation";
-import db from "./db";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import {
   imageSchema,
@@ -10,7 +9,14 @@ import {
 } from "./schemas";
 import cloudinary, { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
-import { Cart, Product } from "@prisma/client";
+import { Cart } from "@prisma/client";
+import db from "@/lib/db"; // твой prisma client
+
+type Product = typeof db.product extends { findMany: (...args: any) => infer R }
+  ? R extends Array<infer U>
+    ? U
+    : never
+  : never;
 
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
@@ -125,7 +131,7 @@ export const createProductAction = async (
   }
 };
 
-export const fetchAdminProducts = async (): Promise<Product[]> => {
+export const fetchAdminProducts = async () => {
   await getAdminUser();
   const products = await db.product.findMany({
     orderBy: {
