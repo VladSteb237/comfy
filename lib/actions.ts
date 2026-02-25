@@ -10,13 +10,7 @@ import {
 import cloudinary, { deleteImage, uploadImage } from "@/lib/cloudinary";
 import { revalidatePath } from "next/cache";
 import { Cart } from "@prisma/client";
-import db from "@/lib/db"; // твой prisma client
-
-type Product = typeof db.product extends { findMany: (...args: any) => infer R }
-  ? R extends Array<infer U>
-    ? U
-    : never
-  : never;
+import db from "@/lib/db";
 
 //////////////////// Admin Section //////////////////////////////////////
 export const getAuthUser = async () => {
